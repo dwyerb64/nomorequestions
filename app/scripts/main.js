@@ -27,7 +27,7 @@ SEMICOLON.documentOnReady = {
       imageObj.src = '/images/no_more.png';
 
       canvas.width = $window.width();
-	  canvas.height = $window.height();
+	    canvas.height = $window.height() + 50;
     },
     
     windowscroll: function() {
