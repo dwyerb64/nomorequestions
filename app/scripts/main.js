@@ -12,22 +12,23 @@ var SEMICOLON = SEMICOLON || {};
 SEMICOLON.documentOnReady = {
     init: function(){
 
-	  var canvas = document.getElementById('landingCanvas');
-      var context = canvas.getContext('2d');
-      var imageObj = new Image();
+	  if(!isMobDevice){ // CHECK FOR MODERNIZR VARIABLE
 
-      imageObj.onload = function() {
-        imageObj.width = canvas.width;
-        imageObj.height = canvas.height;
-        context.globalAlpha = 0.7;
-        context.drawImage(imageObj, 30, 0);
-        context.globalAlpha = 1.0;
-        context.fillStyle="#000000";
-      };
-      imageObj.src = '/images/no_more.png';
+            // add html 5 video
+            $("#videoContainer").html(
+                            '<video id="videoObj" poster="images/no-more-backgrounds.jpg" preload="auto" loop autoplay muted>' +
+                                // '<source src="images/video/Greenfinch Video Background_6.webm" type="video/webm"></source>' +
+                                '<source src="images/no-more-backgrounds3.mp4" type="video/mp4"></source>' +
+                                // '<source src="images/video/Greenfinch Video Background_6.ogg" type="video/ogg"></source>' +
+                            '</video>' +
+                            '<div class="video-overlay" style="background-color: rgba(173, 173, 173, 0.0);"></div>');
+            $("#videoContainer").fadeIn();
 
-      canvas.width = $window.width();
-	    canvas.height = $window.height() + 50;
+
+            var videoObj = document.getElementById('videoObj');
+            videoObj.ontimeupdate = SEMICOLON.functions.checkVideoTime;
+        }
+
     },
     
     windowscroll: function() {
@@ -41,10 +42,30 @@ SEMICOLON.functions = {
     
     functionName: function(){
         
+  },
+
+  checkVideoTime: function(){
+        if(this.currentTime > 14){
+            // back to ink
+            $('.social-icon').removeClass('white-icon').addClass('red-icon');
+        }else if(this.currentTime > 12){
+            // jellyfish
+            $('.social-icon').addClass('white-icon');
+        }else if(this.currentTime > 6){
+            for (var i = 3; i >= 0; i--) {
+                $('.icon-' + i + ' .social-icon').addClass('white-icon');
+            };
+        }
+        
+  },
+
+  updateSVGs: function(){
+
+
   }
 };
 
-
+var increment = 1;
 
   //               //
  //  DOM objects  //

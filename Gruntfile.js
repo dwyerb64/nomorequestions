@@ -54,6 +54,10 @@ module.exports = function (grunt) {
       styles: {
         files: ['<%= config.app %>/styles/{,*/}*.css'],
         tasks: ['newer:copy:styles', 'postcss']
+      },
+      html: {
+        files: ['<%= config.app %>/index.html'],
+        tasks: ['includes']
       }
     },
 
@@ -68,7 +72,7 @@ module.exports = function (grunt) {
       livereload: {
         options: {
           files: [
-            '<%= config.app %>/{,*/}*.html',
+            '.tmp/{,*/}*.html',
             '.tmp/styles/{,*/}*.css',
             '<%= config.app %>/images/{,*/}*',
             '.tmp/scripts/{,*/}*.js'
@@ -370,6 +374,18 @@ module.exports = function (grunt) {
         uglify: true
       }
     },
+    includes: {
+      files: {
+        src: ['<%= config.app %>/index.html'], // Source files
+        dest: '.tmp', // Destination directory
+        flatten: true,
+        cwd: '.',
+        options: {
+          silent: true,
+          banner: '<!-- I am a banner <% includes.files.dest %> -->'
+        }
+      }
+    },
 
     // Run some tasks in parallel to speed up build process
     concurrent: {
@@ -401,6 +417,7 @@ module.exports = function (grunt) {
       'wiredep',
       'concurrent:server',
       'postcss',
+      'includes',
       'browserSync:livereload',
       'watch'
     ]);

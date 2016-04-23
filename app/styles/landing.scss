@@ -1,0 +1,106 @@
+#landing {
+    position: relative;
+    height: 100vh;
+    padding: 0px;
+    background-size: cover !important;
+}
+
+.jumbotron {
+  z-index: 5;
+  background: url("images/no-more-backgrounds.jpg");
+  /*background-size: 100% auto;*/
+}
+
+.jumbotron {
+  margin-bottom: 0px;
+}
+
+#videoContainer {
+    display: none;
+}
+
+#landing {
+     background-image: url('images/no-more-backgrounds.jpg')
+}
+
+
+.video-wrap, .video-overlay {
+  position: absolute;
+  width: 100%;
+  width: 100vw;
+  height: 100%;
+  height: 100vh;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+}
+
+.video-wrap video {
+  position: relative;
+  z-index: 1;
+  min-width: 100%;
+  min-height: 100%;
+}
+
+.video-overlay {
+  z-index: 5;
+  /*background: transparent url('../images/grid.png') repeat;*/
+  -webkit-backface-visibility: hidden;
+}
+
+.caption-center {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    top:50%;
+    margin-top: -50px;
+    width: 100%;
+    margin-left: auto;
+     margin-right: auto;
+    color: #FFF;
+}
+
+.caption-container {
+    position: relative;
+    min-height: 100%;
+    width: 100%;
+}
+
+.caption-center img, .caption-center svg  {
+    max-width: 500px;
+    width: 90%;
+    }
+
+#kiss-container {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+}
+
+
+#logo-container {
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
+}
+
+/* ------------------------------------- */
+/*       Social Icons        */
+/* ------------------------------------- */
+.caption-center .social-icon {
+  max-width: 100px;
+  stroke: black;
+  transition: stroke 1s;
+}
+
+.caption-center .social-icon.red-icon {
+  stroke: red;
+}
+
+.caption-center .social-icon.white-icon {
+  stroke: white;
+}
+
+
+/*-------   Social Icons End ------ */
