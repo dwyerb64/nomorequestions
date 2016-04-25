@@ -116,6 +116,34 @@
   stroke: gray;
 
 }
+
+/* Check for SVG animation allowed with modernizr and add to front*/
+.social-icon {
+  stroke-dasharray: 2000px, 2000px;
+  stroke-dashoffset: 2000;
+}
+
+.js-loaded .social-icon { 
+  -webkit-animation: dash-two 5s forwards;
+  -o-animation: dash-two 5s forwards;
+  animation: dash-two 5s forwards;
+}
+
+@-webkit-keyframes dash-two {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@-o-keyframes dash-two {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes dash-two {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
 /*-------   Social Icons End ------ */
 
 

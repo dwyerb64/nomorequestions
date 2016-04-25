@@ -61,7 +61,7 @@ SEMICOLON.functions = {
 
   checkVideoTime: function(){
 
-        canvas.getContext('2d').drawImage(this,0,0, canvas.width,canvas.height);
+        canvas.getContext('2d').drawImage(this,0,0, this.clientWidth,this.clientHeight);
 
 
         for (var i = 4; i >= 1; i--) {
