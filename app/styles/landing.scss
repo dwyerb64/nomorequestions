@@ -117,6 +117,10 @@
 
 }
 
+.caption-center > a {
+  text-decoration: none;
+}
+
 /* Check for SVG animation allowed with modernizr and add to front*/
 .smil .social-icon {
   stroke-dasharray: 2000px, 2000px;
