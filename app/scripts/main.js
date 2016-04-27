@@ -27,7 +27,7 @@ SEMICOLON.documentOnReady = {
 
         }
 
-        $('#landing').addClass('js-loaded').fadeIn(500);
+        $('#landing').addClass('js-loaded').fadeIn(800);
 
     },
     

@@ -118,15 +118,15 @@
 }
 
 /* Check for SVG animation allowed with modernizr and add to front*/
-.social-icon {
+.smil .social-icon {
   stroke-dasharray: 2000px, 2000px;
   stroke-dashoffset: 2000;
 }
 
-.js-loaded .social-icon { 
-  -webkit-animation: dash-two 5s forwards;
-  -o-animation: dash-two 5s forwards;
-  animation: dash-two 5s forwards;
+.smil .js-loaded .social-icon { 
+  -webkit-animation: dash-two 6s forwards;
+  -o-animation: dash-two 6s forwards;
+  animation: dash-two 6s forwards;
 }
 
 @-webkit-keyframes dash-two {
@@ -156,4 +156,15 @@
     /*top: 30%;*/
   }
 
+}
+
+$hiddenTextWidth: 200px;
+
+#hidden-text {
+  color: white;
+  bottom: 30px;
+  left: 33%;
+  width: $hiddenTextWidth;
+  margin-left: -($hiddenTextWidth/2);
+  position: absolute;
 }
