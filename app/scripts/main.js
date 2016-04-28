@@ -30,9 +30,34 @@ SEMICOLON.documentOnReady = {
                 SEMICOLON.filters.selectedFilter = 
                       SEMICOLON.filters.redFilter;
             });
+            $( "#icon-twitter" ).mouseover(function() {
+                SEMICOLON.filters.selectedFilter = 
+                      SEMICOLON.filters.blueFilter;
+            });
 
+            $( "#icon-youtube").mouseout(function() {
+              SEMICOLON.filters.selectedFilter = SEMICOLON.filters.defaultFilter;
+            });
 
-            $( "#icon-youtube" ).mouseout(function() {
+            $( "#icon-twitter").mouseout(function() {
+              SEMICOLON.filters.selectedFilter = SEMICOLON.filters.defaultFilter;
+            });
+
+            $( "#icon-facebook" ).mouseover(function() {
+                SEMICOLON.filters.selectedFilter = 
+                      SEMICOLON.filters.navyFilter;
+            });
+
+            $( "#icon-facebook").mouseout(function() {
+              SEMICOLON.filters.selectedFilter = SEMICOLON.filters.defaultFilter;
+            });
+            
+            $( "#icon-soundcloud" ).mouseover(function() {
+                SEMICOLON.filters.selectedFilter = 
+                      SEMICOLON.filters.orangeFilter;
+            });
+
+            $( "#icon-soundcloud").mouseout(function() {
               SEMICOLON.filters.selectedFilter = SEMICOLON.filters.defaultFilter;
             });
 
@@ -104,6 +129,44 @@ SEMICOLON.filters = {
         
         for (var i=0; i<pix.length; i+=4) {
             pix[i] = (pix[i] + 10) * 10.5;
+          }
+
+        return imgd;
+    },
+
+    navyFilter: function(imgd) {
+
+        var pix = imgd.data;
+        
+        for (var i=0; i<pix.length; i+=4) {
+            pix[i+1] = (pix[i+1] + 10) * 2.5;
+            pix[i+2] = (pix[i+2] + 10) * 10.5;
+          }
+
+        return imgd;
+    },
+
+    blueFilter: function(imgd) {
+
+        var pix = imgd.data;
+        
+        for (var i=0; i<pix.length; i+=4) {
+            pix[i] = (pix[i] + 10) * 3.5;
+            pix[i+1] = (pix[i+1] + 10) * 15.5;
+            pix[i+2] = (pix[i+2] + 10) * 20.5;
+          }
+
+        return imgd;
+    },
+
+    orangeFilter: function(imgd) {
+
+        var pix = imgd.data;
+        
+        for (var i=0; i<pix.length; i+=4) {
+            pix[i] = (pix[i] + 10) * 20.5;
+            pix[i+1] = (pix[i+1] + 10) * 12.5;
+            pix[i+2] = (pix[i+2] + 10) * 1.5;
           }
 
         return imgd;
