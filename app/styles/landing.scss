@@ -101,7 +101,8 @@
 .caption-center .social-icon {
   max-width: 100px;
   stroke: black;
-  transition: stroke 1s;
+  fill: none;
+  transition: stroke 1s, fill 1s;
 }
 
 .caption-center .social-icon.red-icon {
@@ -114,7 +115,11 @@
 
 .caption-center .social-icon:hover {
   stroke: red;
+  fill: white;
+}
 
+.caption-center .social-icon:hover path {
+  fill: white;
 }
 
 .caption-center .icon-1 .social-icon:hover {

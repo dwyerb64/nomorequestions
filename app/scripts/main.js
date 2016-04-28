@@ -112,39 +112,35 @@ SEMICOLON.functions = {
     addMouseOvers: function(){
         $( "#icon-youtube" ).mouseover(function() {
             SEMICOLON.filters.selectedFilter = SEMICOLON.filters.redFilter;
-            SEMICOLON.filters.fadeInVar = 1;
 
         });
         
         $( "#icon-twitter" ).mouseover(function() {
             SEMICOLON.filters.selectedFilter = SEMICOLON.filters.blueFilter;
-            SEMICOLON.filters.fadeInVar = 1;
         });
 
         $( "#icon-facebook" ).mouseover(function() {
             SEMICOLON.filters.selectedFilter = SEMICOLON.filters.navyFilter;
-            SEMICOLON.filters.fadeInVar = 1;
         });
 
         $( "#icon-soundcloud" ).mouseover(function() {
             SEMICOLON.filters.selectedFilter = SEMICOLON.filters.orangeFilter;
-            SEMICOLON.filters.fadeInVar = 1;
         });
 
         $( "#icon-youtube").mouseout(function() {
-          SEMICOLON.filters.selectedFilter = SEMICOLON.filters.defaultFilter;
+            SEMICOLON.filters.selectedFilter = SEMICOLON.filters.redOffFilter;
         });
 
         $( "#icon-twitter").mouseout(function() {
-          SEMICOLON.filters.selectedFilter = SEMICOLON.filters.defaultFilter;
+            SEMICOLON.filters.selectedFilter = SEMICOLON.filters.blueOffFilter;
         });
 
         $( "#icon-facebook").mouseout(function() {
-          SEMICOLON.filters.selectedFilter = SEMICOLON.filters.defaultFilter;
+            SEMICOLON.filters.selectedFilter = SEMICOLON.filters.navyOffFilter;
         });      
 
         $( "#icon-soundcloud").mouseout(function() {
-          SEMICOLON.filters.selectedFilter = SEMICOLON.filters.defaultFilter;
+            SEMICOLON.filters.selectedFilter = SEMICOLON.filters.orangeOffFilter;
         });
     }
 
@@ -161,69 +157,72 @@ SEMICOLON.filters = {
         return imgd;
     },
 
-    redFilter: function(imgd) {
+    red: [255,0,0],
+    navy: [0,0,255],
+    blue: [0, 255, 255],
+    orange: [255, 165, 0],
+    black: [1,1,1],
+
+    colourFilter: function(imgd, colourParams, on) {
+
+        if(!on){
+            if(SEMICOLON.filters.fadeInVar > 0){
+                SEMICOLON.filters.fadeInVar--;
+                return SEMICOLON.filters.colourChange(imgd, colourParams);
+            }else{
+                return imgd;
+            }
+        }
 
         if(SEMICOLON.filters.fadeInVar < 26){
             SEMICOLON.filters.fadeInVar++;
         }
 
+        return SEMICOLON.filters.colourChange(imgd, colourParams);
+    },
+
+    colourChange: function(imgd, colourParams){
         var pix = imgd.data;
-        
+
         for (var i=0; i<pix.length; i+=4) {
-            pix[i] = (pix[i] + SEMICOLON.filters.fadeInVar) * 10;
-          }
+            pix[i] = pix[i] + ( colourParams[0] * (SEMICOLON.filters.fadeInVar / 25));
+            pix[i + 1] = pix[i + 1] + ( colourParams[1] * (SEMICOLON.filters.fadeInVar / 25));
+            pix[i + 2] = pix[i + 2] + ( colourParams[2] * (SEMICOLON.filters.fadeInVar / 25));     
+        }
 
         return imgd;
+    },
+
+    redFilter: function(imgd) {
+        return SEMICOLON.filters.colourFilter(imgd, SEMICOLON.filters.red, true);
+    },
+
+    redOffFilter: function(imgd) {
+        return SEMICOLON.filters.colourFilter(imgd, SEMICOLON.filters.red, false);
     },
 
     navyFilter: function(imgd) {
+        return SEMICOLON.filters.colourFilter(imgd, SEMICOLON.filters.navy, true);
+    },
 
-        if(SEMICOLON.filters.fadeInVar < 26){
-            SEMICOLON.filters.fadeInVar++;
-        }
-
-        var pix = imgd.data;
-        
-        for (var i=0; i<pix.length; i+=4) {
-            pix[i+1] = (pix[i+1] + SEMICOLON.filters.fadeInVar) * 2.5;
-            pix[i+2] = (pix[i+2] + SEMICOLON.filters.fadeInVar) * 10.5;
-          }
-
-        return imgd;
+    navyOffFilter: function(imgd) {
+        return SEMICOLON.filters.colourFilter(imgd, SEMICOLON.filters.navy, false);
     },
 
     blueFilter: function(imgd) {
+        return SEMICOLON.filters.colourFilter(imgd, SEMICOLON.filters.blue, true);
+    },
 
-        if(SEMICOLON.filters.fadeInVar < 26){
-            SEMICOLON.filters.fadeInVar++;
-        }
-
-        var pix = imgd.data;
-        
-        for (var i=0; i<pix.length; i+=4) {
-            pix[i] = (pix[i] + SEMICOLON.filters.fadeInVar) * 3.5;
-            pix[i+1] = (pix[i+1] + SEMICOLON.filters.fadeInVar) * 15.5;
-            pix[i+2] = (pix[i+2] + SEMICOLON.filters.fadeInVar) * 20.5;
-          }
-
-        return imgd;
+    blueOffFilter: function(imgd) {
+        return SEMICOLON.filters.colourFilter(imgd, SEMICOLON.filters.blue, false);
     },
 
     orangeFilter: function(imgd) {
+        return SEMICOLON.filters.colourFilter(imgd, SEMICOLON.filters.orange, true);
+    },
 
-        if(SEMICOLON.filters.fadeInVar < 26){
-            SEMICOLON.filters.fadeInVar++;
-        }
-
-        var pix = imgd.data;
-        
-        for (var i=0; i<pix.length; i+=4) {
-            pix[i] = (pix[i] + SEMICOLON.filters.fadeInVar) * 13.5;
-            pix[i+1] = (pix[i+1] + SEMICOLON.filters.fadeInVar) * 7.5;
-            pix[i+2] = (pix[i+2] + SEMICOLON.filters.fadeInVar) * 1.25;
-          }
-
-        return imgd;
+    orangeOffFilter: function(imgd) {
+        return SEMICOLON.filters.colourFilter(imgd, SEMICOLON.filters.orange, false);
     },
 
     fadeInVar: 1
