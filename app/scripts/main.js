@@ -14,7 +14,7 @@ SEMICOLON.documentOnReady = {
 
         if(!isMobDevice || !Modernizr.touch){ 
 
-            var video = SEMICOLON.functions.setUpVideo();
+            video = SEMICOLON.functions.setUpVideo();
 
             $('#landing #videoContainerDiv').append(video);
             // landingSection.appendChild(video);
@@ -23,7 +23,19 @@ SEMICOLON.documentOnReady = {
             canvas.height = $window.height();
 
             video.play();
-            video.ontimeupdate = SEMICOLON.functions.checkVideoTime;
+            // video.ontimeupdate = SEMICOLON.functions.checkVideoTime;
+            setTimeout(SEMICOLON.functions.checkVideoTime, 1000/25)
+
+            $( "#icon-youtube" ).mouseover(function() {
+                SEMICOLON.filters.selectedFilter = 
+                      SEMICOLON.filters.redFilter;
+            });
+
+
+            $( "#icon-youtube" ).mouseout(function() {
+              SEMICOLON.filters.selectedFilter = SEMICOLON.filters.defaultFilter;
+            });
+
 
         }
 
@@ -41,7 +53,7 @@ SEMICOLON.documentOnReady = {
 SEMICOLON.functions = {
     
     setUpVideo: function(){
-        var video = document.createElement('video');
+        video = document.createElement('video');
         video.poster = "images/no-more-backgrounds.jpg";
         video.preload = "auto";
         video.id = "videoObj";
@@ -61,43 +73,42 @@ SEMICOLON.functions = {
 
   checkVideoTime: function(){
 
-        canvas.getContext('2d').drawImage(this,0,0, this.clientWidth,this.clientHeight);
+        canvas.getContext('2d').drawImage(video,0,0, video.clientWidth,video.clientHeight);
+
+        var ctx = canvas.getContext('2d');
+        var imgd = ctx.getImageData(0, 0, canvas.width, canvas.width);
 
 
-        for (var i = 4; i >= 1; i--) {
-                var iconPosition = $('.icon-' + i).offset();
-                var ctx = canvas.getContext('2d');
-                var imgd = ctx.getImageData(iconPosition.left + 50 , iconPosition.top - 50, 20, 20);
-                var pix = imgd.data;
+        imgd = SEMICOLON.filters.selectedFilter(imgd);
 
-                var black = 0;
-                var white = 0;
-                // Loop over each pixel and invert the color.
-                for (var j = 0, n = pix.length; j < n; j += 4) {
-
-                    if(pix[j] > 127 && pix[j+1] > 127 && pix[j+2] > 127){
-                        white++;
-                    }else{
-                        black++;
-                    }
-
-                }
-                
-
-                if(black > white){
-                    $('.icon-' + i + ' .social-icon').addClass('white-icon');
-                }else{
-                    $('.icon-' + i + ' .social-icon').removeClass('white-icon');
-                }
-            };
+        ctx.putImageData(imgd, 0, 0);
         
-  },
-
-  updateSVGs: function(){
-
-
+        setTimeout(SEMICOLON.functions.checkVideoTime, 1000/25);
+        
   }
+  
 };
+
+SEMICOLON.filters = {
+     defaultFilter: function(imgd){ 
+        return imgd;
+    },
+
+    selectedFilter: function(imgd){ 
+        return imgd;
+    },
+
+    redFilter: function(imgd) {
+
+        var pix = imgd.data;
+        
+        for (var i=0; i<pix.length; i+=4) {
+            pix[i] = (pix[i] + 10) * 10.5;
+          }
+
+        return imgd;
+    }
+}
 
 
   //               //
@@ -106,7 +117,8 @@ SEMICOLON.functions = {
 var $htmlBody = $('body,html'),
     $window = $(window),
     isMobDevice = (/iphone|ipad|Android|webOS|iPod|BlackBerry|Windows Phone|ZuneWP7/gi).test(navigator.appVersion),
-    canvas = document.getElementById('videoCanvas');;
+    canvas = document.getElementById('videoCanvas'),
+    video = null;
 
 
   //          //

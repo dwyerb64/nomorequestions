@@ -113,7 +113,25 @@
 }
 
 .caption-center .social-icon:hover {
-  stroke: gray;
+  stroke: red;
+
+}
+
+.caption-center .icon-1 .social-icon:hover {
+  stroke: orange;
+
+}
+.caption-center .icon-2 .social-icon:hover {
+  stroke: blue;
+  fill: blue;
+
+}
+.caption-center .icon-3 .social-icon:hover {
+  stroke: aqua;
+
+}
+.caption-center .icon-4 .social-icon:hover {
+  stroke: red;
 
 }
 
@@ -171,4 +189,8 @@ $hiddenTextWidth: 200px;
   width: $hiddenTextWidth;
   margin-left: -($hiddenTextWidth/2);
   position: absolute;
+}
+
+#videoContainerDiv {
+  visibility: hidden;
 }
