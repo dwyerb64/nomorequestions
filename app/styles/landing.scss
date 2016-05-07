@@ -12,11 +12,8 @@
 
 .jumbotron {
   z-index: 5;
-  /*background-size: 100% auto;*/
-}
-
-.jumbotron {
   margin-bottom: 0px;
+  /*background-size: 100% auto;*/
 }
 
 #videoContainer {
@@ -146,8 +143,8 @@
 
 /* Check for SVG animation allowed with modernizr and add to front*/
 .smil .social-icon {
-  stroke-dasharray: 2000px, 2000px;
-  stroke-dashoffset: 2000;
+  stroke-dasharray: 1900px, 1900px;
+  stroke-dashoffset: 1900;
 }
 
 .smil .js-loaded .social-icon { 
@@ -183,17 +180,6 @@
     /*top: 30%;*/
   }
 
-}
-
-$hiddenTextWidth: 200px;
-
-#hidden-text {
-  color: white;
-  bottom: 30px;
-  left: 33%;
-  width: $hiddenTextWidth;
-  margin-left: -($hiddenTextWidth/2);
-  position: absolute;
 }
 
 #videoContainerDiv {

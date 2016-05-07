@@ -17,34 +17,45 @@ SEMICOLON.documentOnReady = {
             video = SEMICOLON.functions.setUpVideo();
 
             $('#landing #videoContainerDiv').append(video);
-            // landingSection.appendChild(video);
 
             canvas.width = $window.width();
             canvas.height = $window.height();
 
-            video.play();
-            // video.ontimeupdate = SEMICOLON.functions.checkVideoTime;
-            setTimeout(SEMICOLON.functions.redrawFrame, 1000/25);
+            video.oncanplay = SEMICOLON.functions.playVideo;
+
+            timer = setTimeout(SEMICOLON.functions.redrawFrame, 1000/25);
 
             video.ontimeupdate = SEMICOLON.functions.checkVideoTime;
 
             SEMICOLON.functions.addMouseOvers();
 
 
+        }else{
+            $('#landing').fadeIn(1000);
         }
 
-        $('#landing').addClass('js-loaded').fadeIn(800);
+        
 
     },
     
-    windowscroll: function() {
+    // windowscroll: function() {
         
 
+    // },
+
+    browserResize: function(){
+        canvas.width = $window.width();
+        canvas.height = $window.height();
     }
 
 };
 
 SEMICOLON.functions = {
+    playVideo: function(){
+        video.play();
+        $('#spinner-overlay').hide();
+        $('#landing').fadeIn(1000).addClass('js-loaded');
+    },
     
     setUpVideo: function(){
         video = document.createElement('video');
@@ -54,11 +65,17 @@ SEMICOLON.functions = {
         video.autoPlay = true;
         video.loop = true;
 
-        video.src = 'images/no-more-backgrounds3.mp4';
+        video.src = 'images/no-more-backgrounds31.mp4';
         
         if (video.canPlayType('video/mp4').length > 0) {
             /* set some video source */
             video.src = 'images/no-more-backgrounds3.mp4';
+        }else if (video.canPlayType('video/webm').length > 0) {
+            /* set some video source */
+            video.src = 'images/no-more-backgrounds3.webm';
+        }else if (video.canPlayType('video/ogg').length > 0) {
+            /* set some video source */
+            video.src = 'images/no-more-backgrounds3.ogv';
         }
 
         return video;  
@@ -75,8 +92,10 @@ SEMICOLON.functions = {
         imgd = SEMICOLON.filters.selectedFilter(imgd);
 
         ctx.putImageData(imgd, 0, 0);
+
+        clearTimeout(timer);
         
-        setTimeout(SEMICOLON.functions.redrawFrame, 1000/25);
+        timer = setTimeout(SEMICOLON.functions.redrawFrame, 1000/25);
         
     },
 
@@ -110,38 +129,22 @@ SEMICOLON.functions = {
     },
 
     addMouseOvers: function(){
-        $( "#icon-youtube" ).mouseover(function() {
-            SEMICOLON.filters.selectedFilter = SEMICOLON.filters.redFilter;
 
-        });
-        
-        $( "#icon-twitter" ).mouseover(function() {
-            SEMICOLON.filters.selectedFilter = SEMICOLON.filters.blueFilter;
-        });
+        $( ".js-icon-mouse-event" ).mouseover(function() {
 
-        $( "#icon-facebook" ).mouseover(function() {
-            SEMICOLON.filters.selectedFilter = SEMICOLON.filters.navyFilter;
+            var colourSelected = $(this).attr("colour");
+            SEMICOLON.filters.selectedFilter = function(imgd) {
+                return SEMICOLON.filters.colourFilter(imgd, SEMICOLON.filters[colourSelected], true);
+            };
         });
 
-        $( "#icon-soundcloud" ).mouseover(function() {
-            SEMICOLON.filters.selectedFilter = SEMICOLON.filters.orangeFilter;
+        $( ".js-icon-mouse-event").mouseout(function() {
+            var colourSelected = $(this).attr("colour");
+            SEMICOLON.filters.selectedFilter = function(imgd) {
+                return SEMICOLON.filters.colourFilter(imgd, SEMICOLON.filters[colourSelected], false);
+            };
         });
 
-        $( "#icon-youtube").mouseout(function() {
-            SEMICOLON.filters.selectedFilter = SEMICOLON.filters.redOffFilter;
-        });
-
-        $( "#icon-twitter").mouseout(function() {
-            SEMICOLON.filters.selectedFilter = SEMICOLON.filters.blueOffFilter;
-        });
-
-        $( "#icon-facebook").mouseout(function() {
-            SEMICOLON.filters.selectedFilter = SEMICOLON.filters.navyOffFilter;
-        });      
-
-        $( "#icon-soundcloud").mouseout(function() {
-            SEMICOLON.filters.selectedFilter = SEMICOLON.filters.orangeOffFilter;
-        });
     }
 
 
@@ -149,9 +152,6 @@ SEMICOLON.functions = {
 };
 
 SEMICOLON.filters = {
-    defaultFilter: function(imgd){ 
-        return imgd;
-    },
 
     selectedFilter: function(imgd){ 
         return imgd;
@@ -161,7 +161,6 @@ SEMICOLON.filters = {
     navy: [0,0,255],
     blue: [0, 255, 255],
     orange: [255, 165, 0],
-    black: [1,1,1],
 
     colourFilter: function(imgd, colourParams, on) {
 
@@ -183,46 +182,14 @@ SEMICOLON.filters = {
 
     colourChange: function(imgd, colourParams){
         var pix = imgd.data;
-
+        var fadeInFraction = SEMICOLON.filters.fadeInVar / 25;
         for (var i=0; i<pix.length; i+=4) {
-            pix[i] = pix[i] + ( colourParams[0] * (SEMICOLON.filters.fadeInVar / 25));
-            pix[i + 1] = pix[i + 1] + ( colourParams[1] * (SEMICOLON.filters.fadeInVar / 25));
-            pix[i + 2] = pix[i + 2] + ( colourParams[2] * (SEMICOLON.filters.fadeInVar / 25));     
+            pix[i] = pix[i] + ( colourParams[0] * fadeInFraction);
+            pix[i + 1] = pix[i + 1] + ( colourParams[1] * fadeInFraction);
+            pix[i + 2] = pix[i + 2] + ( colourParams[2] * fadeInFraction);     
         }
 
         return imgd;
-    },
-
-    redFilter: function(imgd) {
-        return SEMICOLON.filters.colourFilter(imgd, SEMICOLON.filters.red, true);
-    },
-
-    redOffFilter: function(imgd) {
-        return SEMICOLON.filters.colourFilter(imgd, SEMICOLON.filters.red, false);
-    },
-
-    navyFilter: function(imgd) {
-        return SEMICOLON.filters.colourFilter(imgd, SEMICOLON.filters.navy, true);
-    },
-
-    navyOffFilter: function(imgd) {
-        return SEMICOLON.filters.colourFilter(imgd, SEMICOLON.filters.navy, false);
-    },
-
-    blueFilter: function(imgd) {
-        return SEMICOLON.filters.colourFilter(imgd, SEMICOLON.filters.blue, true);
-    },
-
-    blueOffFilter: function(imgd) {
-        return SEMICOLON.filters.colourFilter(imgd, SEMICOLON.filters.blue, false);
-    },
-
-    orangeFilter: function(imgd) {
-        return SEMICOLON.filters.colourFilter(imgd, SEMICOLON.filters.orange, true);
-    },
-
-    orangeOffFilter: function(imgd) {
-        return SEMICOLON.filters.colourFilter(imgd, SEMICOLON.filters.orange, false);
     },
 
     fadeInVar: 1
@@ -236,7 +203,8 @@ var $htmlBody = $('body,html'),
     $window = $(window),
     isMobDevice = (/iphone|ipad|Android|webOS|iPod|BlackBerry|Windows Phone|ZuneWP7/gi).test(navigator.appVersion),
     canvas = document.getElementById('videoCanvas'),
-    video = null;
+    video = null,
+    timer;
 
 
   //          //
@@ -244,7 +212,9 @@ var $htmlBody = $('body,html'),
 //          //
 $(document).ready( SEMICOLON.documentOnReady.init );
 
-$(document).scroll( SEMICOLON.documentOnReady.windowscroll );
+// $(document).scroll( SEMICOLON.documentOnReady.windowscroll );
+
+$(window).resize( SEMICOLON.documentOnReady.browserResize );
         
         
 })(jQuery);
