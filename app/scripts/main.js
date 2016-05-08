@@ -65,17 +65,17 @@ SEMICOLON.functions = {
         video.autoPlay = true;
         video.loop = true;
 
-        video.src = 'images/no-more-backgrounds31.mp4';
+        // video.src = 'images/no-more-backgrounds31.mp4';
         
         if (video.canPlayType('video/mp4').length > 0) {
             /* set some video source */
-            video.src = 'images/no-more-backgrounds3.mp4';
+            video.src = 'images/no-more-backgrounds.mp4';
         }else if (video.canPlayType('video/webm').length > 0) {
             /* set some video source */
-            video.src = 'images/no-more-backgrounds3.webm';
+            video.src = 'images/no-more-backgrounds.webm';
         }else if (video.canPlayType('video/ogg').length > 0) {
             /* set some video source */
-            video.src = 'images/no-more-backgrounds3.ogv';
+            video.src = 'images/no-more-backgrounds.ogv';
         }
 
         return video;  
