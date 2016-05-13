@@ -7,7 +7,7 @@
 }
 
 #landing.js-loaded {
-  background: url("/images/no-more-backgrounds.jpg");
+  background: url("/images/js-images/no-more-backgrounds.jpg");
 }
 
 .jumbotron {
@@ -168,6 +168,20 @@
     stroke-dashoffset: 0;
   }
 }
+
+
+@media (max-width: 767px) { 
+  .caption-center .social-icon {
+    stroke: black !important;
+  }
+
+  .smil .social-icon { 
+    -webkit-animation: dash-two 6s forwards;
+    -o-animation: dash-two 6s forwards;
+    animation: dash-two 6s forwards;
+  }
+
+}
 /*-------   Social Icons End ------ */
 
 
@@ -178,6 +192,10 @@
 
   .caption-center {
     /*top: 30%;*/
+  }
+
+  #landing {
+    background: url("/images/js-images/no-more-backgrounds.jpg");
   }
 
 }

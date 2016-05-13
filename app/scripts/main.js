@@ -31,6 +31,7 @@ SEMICOLON.documentOnReady = {
 
 
         }else{
+            $('#spinner-overlay').hide();
             $('#landing').fadeIn(1000);
         }
 
@@ -59,9 +60,9 @@ SEMICOLON.functions = {
     
     setUpVideo: function(){
         video = document.createElement('video');
-        video.poster = "images/no-more-backgrounds.jpg";
-        video.preload = "auto";
-        video.id = "videoObj";
+        video.poster = '/images/js-images/no-more-backgrounds.jpg';
+        video.preload = 'auto';
+        video.id = 'videoObj';
         video.autoPlay = true;
         video.loop = true;
 
@@ -69,13 +70,13 @@ SEMICOLON.functions = {
         
         if (video.canPlayType('video/mp4').length > 0) {
             /* set some video source */
-            video.src = 'images/no-more-backgrounds.mp4';
+            video.src = '/images/js-images/no-more-backgrounds.mp4';
         }else if (video.canPlayType('video/webm').length > 0) {
             /* set some video source */
-            video.src = 'images/no-more-backgrounds.webm';
+            video.src = '/images/js-images/no-more-backgrounds.webm';
         }else if (video.canPlayType('video/ogg').length > 0) {
             /* set some video source */
-            video.src = 'images/no-more-backgrounds.ogv';
+            video.src = '/images/js-images/no-more-backgrounds.ogv';
         }
 
         return video;  
@@ -125,21 +126,21 @@ SEMICOLON.functions = {
                 }else{
                     $('.icon-' + i + ' .social-icon').removeClass('white-icon');
                 }
-            };
+            }
     },
 
     addMouseOvers: function(){
 
-        $( ".js-icon-mouse-event" ).mouseover(function() {
+        $( '.js-icon-mouse-event' ).mouseover(function() {
 
-            var colourSelected = $(this).attr("colour");
+            var colourSelected = $(this).attr('colour');
             SEMICOLON.filters.selectedFilter = function(imgd) {
                 return SEMICOLON.filters.colourFilter(imgd, SEMICOLON.filters[colourSelected], true);
             };
         });
 
-        $( ".js-icon-mouse-event").mouseout(function() {
-            var colourSelected = $(this).attr("colour");
+        $( '.js-icon-mouse-event').mouseout(function() {
+            var colourSelected = $(this).attr('colour');
             SEMICOLON.filters.selectedFilter = function(imgd) {
                 return SEMICOLON.filters.colourFilter(imgd, SEMICOLON.filters[colourSelected], false);
             };
@@ -199,8 +200,7 @@ SEMICOLON.filters = {
   //               //
  //  DOM objects  //
 //               //
-var $htmlBody = $('body,html'),
-    $window = $(window),
+var $window = $(window),
     isMobDevice = (/iphone|ipad|Android|webOS|iPod|BlackBerry|Windows Phone|ZuneWP7/gi).test(navigator.appVersion),
     canvas = document.getElementById('videoCanvas'),
     video = null,
