@@ -3,24 +3,21 @@
     height: 100vh;
     padding: 0px;
     background-size: cover !important;
+    display: none;
+}
+
+#landing.js-loaded {
+  background: url("/images/js-images/no-more-backgrounds.jpg");
 }
 
 .jumbotron {
   z-index: 5;
-  background: url("images/no-more-backgrounds.jpg");
-  /*background-size: 100% auto;*/
-}
-
-.jumbotron {
   margin-bottom: 0px;
+  /*background-size: 100% auto;*/
 }
 
 #videoContainer {
     display: none;
-}
-
-#landing {
-     background-image: url('images/no-more-backgrounds.jpg')
 }
 
 
@@ -42,6 +39,10 @@
   min-width: 100%;
   min-height: 100%;
 }
+
+/*#videoContainerDiv {
+  z-index: 1;
+}*/
 
 .video-overlay {
   z-index: 5;
@@ -83,6 +84,12 @@
   position: absolute;
   right: 5px;
   bottom: 5px;
+
+}
+
+#logo-container img {
+  max-width: 90%;
+  float: right;
 }
 
 /* ------------------------------------- */
@@ -91,7 +98,8 @@
 .caption-center .social-icon {
   max-width: 100px;
   stroke: black;
-  transition: stroke 1s;
+  fill: none;
+  transition: stroke 1s, fill 1s;
 }
 
 .caption-center .social-icon.red-icon {
@@ -102,5 +110,96 @@
   stroke: white;
 }
 
+.caption-center .social-icon:hover {
+  stroke: red;
+  fill: white;
+}
 
+.caption-center .social-icon:hover path {
+  fill: white;
+}
+
+.caption-center .icon-1 .social-icon:hover {
+  stroke: orange;
+
+}
+.caption-center .icon-2 .social-icon:hover {
+  stroke: blue;
+  fill: blue;
+
+}
+.caption-center .icon-3 .social-icon:hover {
+  stroke: aqua;
+
+}
+.caption-center .icon-4 .social-icon:hover {
+  stroke: red;
+
+}
+
+.caption-center > a {
+  text-decoration: none;
+}
+
+/* Check for SVG animation allowed with modernizr and add to front*/
+.smil .social-icon {
+  stroke-dasharray: 1900px, 1900px;
+  stroke-dashoffset: 1900;
+}
+
+.smil .js-loaded .social-icon { 
+  -webkit-animation: dash-two 6s forwards;
+  -o-animation: dash-two 6s forwards;
+  animation: dash-two 6s forwards;
+}
+
+@-webkit-keyframes dash-two {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@-o-keyframes dash-two {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes dash-two {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+
+@media (max-width: 767px) { 
+  .caption-center .social-icon {
+    stroke: black !important;
+  }
+
+  .smil .social-icon { 
+    -webkit-animation: dash-two 6s forwards;
+    -o-animation: dash-two 6s forwards;
+    animation: dash-two 6s forwards;
+  }
+
+}
 /*-------   Social Icons End ------ */
+
+
+@media (max-width: 767px) { 
+  .caption-center .social-icon {
+    max-width: 60px;
+  }
+
+  .caption-center {
+    /*top: 30%;*/
+  }
+
+  #landing {
+    background: url("/images/js-images/no-more-backgrounds.jpg");
+  }
+
+}
+
+#videoContainerDiv {
+  visibility: hidden;
+}

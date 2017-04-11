@@ -57,7 +57,7 @@ module.exports = function (grunt) {
       },
       html: {
         files: ['<%= config.app %>/index.html'],
-        tasks: ['includes']
+        tasks: ['includes:serve']
       }
     },
 
@@ -211,7 +211,7 @@ module.exports = function (grunt) {
     // Automatically inject Bower components into the HTML file
     wiredep: {
       app: {
-        src: ['<%= config.app %>/index.html'],
+        src: ['.tmp/index.html'],
         exclude: ['bootstrap.js'],
         ignorePath: /^(\.\.\/)*\.\./
       },
@@ -228,6 +228,7 @@ module.exports = function (grunt) {
           '<%= config.dist %>/scripts/{,*/}*.js',
           '<%= config.dist %>/styles/{,*/}*.css',
           '<%= config.dist %>/images/{,*/}*.*',
+          '!<%= config.dist %>/images/js-images/{,*/}*.*',
           '<%= config.dist %>/fonts/{,*/}*.*',
           '<%= config.dist %>/*.{ico,png}'
         ]
@@ -241,7 +242,7 @@ module.exports = function (grunt) {
       options: {
         dest: '<%= config.dist %>'
       },
-      html: '<%= config.app %>/index.html'
+      html: '.tmp/index.html'
     },
 
     // Performs rewrites based on rev and the useminPrepare configuration
@@ -267,9 +268,9 @@ module.exports = function (grunt) {
           dest: '<%= config.dist %>/images'
         },{
           expand: true,
-          cwd: '<%= config.app %%>',
+          cwd: '<%= config.app %>',
           src: '*.{ico,png}',
-          dest: '<%= config.dist %%>'
+          dest: '<%= config.dist %>'
         }]
       }
     },
@@ -345,16 +346,34 @@ module.exports = function (grunt) {
           src: [
             '*.txt',
             'images/{,*/}*.webp',
-            '{,*/}*.html',
             'fonts/{,*/}*.*'
           ]
-        }, {
+        },
+        {
+          expand: true,
+          dot: true,
+          cwd: '.tmp',
+          dest: '<%= config.dist %>',
+          src: [
+            '{,*/}*.html'
+          ]
+        }
+        , {
           expand: true,
           dot: true,
           cwd: '.',
           src: 'bower_components/bootstrap-sass/assets/fonts/bootstrap/*',
           dest: '<%= config.dist %>'
-        }]
+        },{
+          expand: true,
+          dot: true,
+          cwd: '<%= config.app %>',
+          dest: '<%= config.dist %>',
+          src: [
+            'images/js-images/no-more-backgrounds.*',
+          ]
+        }
+        ]
       }
     },
 
@@ -375,16 +394,24 @@ module.exports = function (grunt) {
       }
     },
     includes: {
-      files: {
-        src: ['<%= config.app %>/index.html'], // Source files
-        dest: '.tmp', // Destination directory
-        flatten: true,
-        cwd: '.',
-        options: {
-          silent: true,
-          banner: '<!-- I am a banner <% includes.files.dest %> -->'
+      build: {
+                cwd: '<%= config.app %>',
+                src: ['index.html'], // Source files
+                dest: '.tmp/', // Destination directory
+                options: {
+                    silent: true,
+                    banner: ''
+                }
+            },
+      serve: {
+            cwd: '<%= config.app %>',
+            src: ['index.html'], // Source files
+            dest: '.tmp/', // Destination directory
+            options: {
+                silent: true,
+                banner: ''
+            }
         }
-      }
     },
 
     // Run some tasks in parallel to speed up build process
@@ -417,7 +444,7 @@ module.exports = function (grunt) {
       'wiredep',
       'concurrent:server',
       'postcss',
-      'includes',
+      'includes:serve',
       'browserSync:livereload',
       'watch'
     ]);
@@ -446,6 +473,7 @@ module.exports = function (grunt) {
   grunt.registerTask('build', [
     'clean:dist',
     'wiredep',
+    'includes:build',
     'useminPrepare',
     'concurrent:dist',
     'postcss',
