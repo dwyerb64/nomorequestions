@@ -162,6 +162,7 @@ SEMICOLON.filters = {
     navy: [0,0,255],
     blue: [0, 255, 255],
     orange: [255, 165, 0],
+    pink: [211,42,143],
 
     colourFilter: function(imgd, colourParams, on) {
 
